@@ -1,0 +1,7 @@
+[user]
+	name = Elliot Skadi
+	email = lj.skadi@gmail.com
+[init]
+	defaultBranch = main
+[core]
+	excludesfile = /Users/ljsk/.gitignore_global

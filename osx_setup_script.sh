@@ -1,4 +1,6 @@
 #!/bin/bash
+
+echo "Hello Moto"
 # http://redsymbol.net/articles/unofficial-bash-strict-mode/
 set -euo pipefail
 IFS=$'\n\t'
@@ -18,7 +20,7 @@ IFS=$'\n\t'
 #
 # 3)
 # https://docs.brew.sh/Installation#macos-requirements
-xcode-select --install
+ xcode-select --install
 # (_xcode-select installation_ installs git already, however git will be installed via brew packages as well to install as much as possible the brew way
 #  this way you benefit from frequent brew updates)
 # 
@@ -46,50 +48,6 @@ if [[ ! -z "$PROD" ]]; then
   softwareupdate -i "$PROD" --verbose
 fi
 
-echo "install git and config"
-brew install git
-brew install gh
-
-git config --global user.name "Elliot Skadi"
-git config --global user.email lj.skadi@gmail.com
-git config --global init.defaultBranch main
-
-echo "update iterm2 and zsh"
-brew cask install iterm2
-brew install zsh zsh-completions
-
-
-sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
-git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
-
-echo "export ZSH_THEME=powerlevel9k/powerlevel9" >> ~/.zshrc
-echo "export POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir rbenv vcs)" >> ~/.zshrc
-echo "export POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs history time)" >> ~/.zshrc
-echo "export POWERLEVEL9K_PROMPT_ON_NEWLINE=true" >> ~/.zshrc
-# Add a space in the first prompt
-echo "export POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%f"" >> ~/.zshrc
-
-echo "install gnu tools and utilities"
-# GNU core utilities
-brew install coreutils
-brew install gnu-sed
-brew install gnu-tar
-brew install gnu-indent
-brew install gnu-which
-
-# GNU tools
-brew install findutils
-
-echo "install java"
-# https://github.com/AdoptOpenJDK/homebrew-openjdk
-brew tap AdoptOpenJDK/openjdk
-brew install --cask adoptopenjdk
-brew install --cask adoptopenjdk8
-brew install --cask adoptopenjdk11
-brew install --cask adoptopenjdk14
-brew install --cask adoptopenjdk15
-
 PACKAGES=(
    ack # Search tool like grep, but optimized for programmers
     ansible # Automate deployment, configuration, and upgrading
@@ -99,15 +57,19 @@ PACKAGES=(
     brew-cask-completion # Bash & Fish completion for brew-cask
     coreutils # GNU File, Shell, and Text utilities
     curl # Get a file from an HTTP, HTTPS or FTP server
-    docker # Pack, ship and run any application as a lightweight container
     docker-completion # Bash, Zsh and Fish completion for Docker
     docker-compose # Isolated development environments using Docker
     fx
     fzf # Command-line fuzzy finder written in Go
     git # Distributed revision control system
+    gh # GitHub
     grafana # Gorgeous metric visualizations and dashboards for timeseries databases.
+    coreutils # GNU core utilities
+    gnu-sed # GNU core utilities
+    gnu-tar # GNU core utilities
+    gnu-indent # GNU core utilities
+    gnu-which # GNU core utilities
     hashcat # World's fastest and most advanced password recovery utility
-    heroku # Command-line client for the cloud PaaS
     highlight # Convert source code to formatted text with syntax highlighting
     imagemagick
     jenv # Manage your Java environment
@@ -115,11 +77,7 @@ PACKAGES=(
     jq # Lightweight and flexible command-line JSON processor
     jruby # Ruby implementation in pure Java
     kafka # Publish-subscribe messaging rethought as a distributed commit log
-    kibana # Analytics and search dashboard for Elasticsearch
-    kubernetes-cli
     kubernetes-cli # Kubernetes command-line interface
-    kubernetes-helm
-    kubernetes-helm # The Kubernetes package manager
     libtool # Generic library support script
     libyaml # YAML Parser
     lynx # Text-based web browser
@@ -162,20 +120,39 @@ PACKAGES=(
 echo "Installing packages..."
 brew install ${PACKAGES[@]}
 
+
 CASKS=(
+    iterm2  # iterm2
+    temurin # java: https://formulae.brew.sh/cask/temurin
     android-studio
     chromium
+    docker # Pack, ship and run any application as a lightweight container
     firefox
     gimp
     google-chrome
-    keepingyouawake
-    rectangle
     slack
     telegram
     visual-studio-code
     vlc
     zoom
 )
+
+git config --global user.name "Elliot Skadi"
+git config --global user.email lj.skadi@gmail.com
+git config --global init.defaultBranch main
+
+# setup for oh-my-zsh and powerlevel 
+sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
+git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+
+ echo "export ZSH_THEME=powerlevel9k/powerlevel9" >> ~/.zshrc
+ echo "export POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir rbenv vcs)" >> ~/.zshrc
+ echo "export POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs history time)" >> ~/.zshrc
+ echo "export POWERLEVEL9K_PROMPT_ON_NEWLINE=true" >> ~/.zshrc
+ echo "export POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=%f" >> ~/.zshrc
+ echo "export PATH=$HOME/bin:/usr/local/bin:$PATH" >> ~/.zshrc
+ echo "export ZSH="$HOME/.oh-my-zsh" >> ~/.zshrc
 
 echo "Installing cask apps..."
 sudo -u $SUDO_USER brew install --cask ${CASKS[@]}
