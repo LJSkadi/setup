@@ -1,0 +1,8 @@
+{
+    "editor.accessibilitySupport": "off",
+    "workbench.colorTheme": "Birds of Paradise",
+    "files.autoSave": "afterDelay",
+    "editor.tabSize": 2,
+    "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+    "terminal.integrated.fontFamily": "Source Code Pro for Powerline"
+}
