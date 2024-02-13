@@ -137,8 +137,8 @@ CASKS=(
     zoom
 )
 
-git config --global user.name "Elliot Skadi"
-git config --global user.email lj.skadi@gmail.com
+git config --global user.name "Nana"
+git config --global user.email nana@gmail.com
 git config --global init.defaultBranch main
 
 # setup for oh-my-zsh and powerlevel 
